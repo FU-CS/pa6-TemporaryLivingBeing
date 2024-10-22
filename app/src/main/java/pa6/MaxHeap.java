@@ -46,36 +46,37 @@ public class MaxHeap implements Heap {
         return this.data[this.size];
     }
 
-    private void heapify(){
-        int i = this.size-1;
-        while (i > 0){
-            int parentidx = (i-1)/2;
+    private void heapify() {
+        int i = this.size - 1;
+        while (i > 0) {
+            int parentidx = (i - 1) / 2;
             int parent = this.data[parentidx];
-
-            if (this.data[i] > parent){
+    
+            if (this.data[i] > parent) {
                 this.swap(parentidx, i);
             }
-            i -= 1;
+            i = parentidx;
         }
     }
     
-    private void deleteHelper(){
+    private void deleteHelper() {
         int i = 0;
-        while (i < this.size && i*2+1 < this.size){
-            int leftChild = this.data[i*2+1];
-            int rightChild = this.data[i*2+2];
-
-            if (leftChild >= rightChild && this.data[i] < leftChild){
-                this.swap(i*2+1, i);
-                i = i*2+1;
-                continue;
+        while (i * 2 + 1 < this.size) {
+            int leftChildIdx = i * 2 + 1;
+            int rightChildIdx = i * 2 + 2;
+    
+            int largerChildIdx = leftChildIdx;
+    
+            if (rightChildIdx < this.size && this.data[rightChildIdx] > this.data[leftChildIdx]) {
+                largerChildIdx = rightChildIdx;
             }
-            if (leftChild < rightChild && this.data[i] < leftChild){
-                this.swap(i*2+2, i);
-                i = i*2+2;
-                continue;
+    
+            if (this.data[i] >= this.data[largerChildIdx]) {
+                return; 
             }
-            break;
+    
+            this.swap(largerChildIdx, i);
+            i = largerChildIdx;
         }
     }
     /**
@@ -124,7 +125,19 @@ public class MaxHeap implements Heap {
      * @param array
      */
     static int[] heapSort(int[] array){
-        return null;
+        MaxHeap maxHeap = new MaxHeap(array.length);
+
+        for (int i = 0; i < array.length; i++) {
+            maxHeap.insert(array[i]);
+        }
+    
+        int[] sortedArray = new int[array.length];
+    
+        for (int i = sortedArray.length - 1; i >= 0; i--) {
+            sortedArray[i] = maxHeap.delete();
+        }
+    
+        return sortedArray;
     }
 
 }

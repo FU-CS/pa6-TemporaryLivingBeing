@@ -98,4 +98,35 @@ public class MaxHeapTest {
 
         heap.print();
     }
+        @Test
+        public void testHeapSortEmptyArray() {
+            int[] input = {};
+            int[] expected = {};
+            int[] sorted = MaxHeap.heapSort(input);
+            assertArrayEquals(expected, sorted);
+        }
+    
+        @Test
+        public void testHeapSortSingleElement() {
+            int[] input = {5};
+            int[] expected = {5};
+            int[] sorted = MaxHeap.heapSort(input);
+            assertArrayEquals(expected, sorted);
+        }
+    
+        @Test
+        public void testHeapSortRandom() {
+            int[] input = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
+            int[] expected = {1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9};
+            int[] sorted = MaxHeap.heapSort(input);
+            assertArrayEquals(expected, sorted);
+        }
+
+        @Test
+        public void testHeapSortDuplicateElements() {
+            int[] input = {2, 2, 3, 1, 3, 1, 2};
+            int[] expected = {1, 1, 2, 2, 2, 3, 3};
+            int[] sorted = MaxHeap.heapSort(input);
+            assertArrayEquals(expected, sorted);
+        }
 }

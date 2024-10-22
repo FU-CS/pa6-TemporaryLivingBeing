@@ -44,36 +44,36 @@ public class MinHeap implements Heap {
         return this.data[this.size];
     }
 
-    private void heapify(){
-        int i = this.size-1;
-        while (i > 0){
-            int parentidx = (i-1)/2;
-            int parent = this.data[parentidx];
-
-            if (this.data[i] < parent){
+    private void heapify() {
+        int i = this.size - 1;
+        while (i > 0) {
+            int parentidx = (i - 1) / 2;
+    
+            if (this.data[i] < this.data[parentidx]) {
                 this.swap(parentidx, i);
             }
             i -= 1;
         }
     }
     
-    private void deleteHelper(){
+    
+    private void deleteHelper() {
         int i = 0;
-        while (i < this.size && i*2+1 < this.size){
-            int leftChild = this.data[i*2+1];
-            int rightChild = this.data[i*2+2];
-
-            if (leftChild <= rightChild && this.data[i] > leftChild){
-                this.swap(i*2+1, i);
-                i = i*2+1;
-                continue;
+        while (i * 2 + 1 < this.size) {
+            int leftChildIdx = i * 2 + 1;
+            int rightChildIdx = i * 2 + 2;
+            int smallerChildIdx = leftChildIdx;
+    
+            if (rightChildIdx < this.size && this.data[rightChildIdx] < this.data[leftChildIdx]) {
+                smallerChildIdx = rightChildIdx;
             }
-            if (leftChild < rightChild && this.data[i] > leftChild){
-                this.swap(i*2+2, i);
-                i = i*2+2;
-                continue;
+    
+            if (this.data[i] <= this.data[smallerChildIdx]) {
+                return;
             }
-            break;
+    
+            this.swap(smallerChildIdx, i);
+            i = smallerChildIdx;
         }
     }
     /**
@@ -122,7 +122,19 @@ public class MinHeap implements Heap {
      * @param array
      */
     static int[] heapSort(int[] array){
-        return null;
+        MinHeap minHeap = new MinHeap(array.length);
+
+        for (int i = 0; i < array.length; i++) {
+            minHeap.insert(array[i]);
+        }
+    
+        int[] sortedArray = new int[array.length];
+    
+        for (int i = 0; i < sortedArray.length; i++) {
+            sortedArray[i] = minHeap.delete();
+        }
+    
+        return sortedArray;
     }
 
 }
