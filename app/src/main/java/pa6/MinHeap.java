@@ -20,6 +20,9 @@ public class MinHeap implements Heap {
      */ 
     // 1 2 / 1
     public void insert(int value){
+        if (this.size >= this.maxCapacity){
+            return;
+        }
         this.data[this.size] = value;
         this.size += 1;
         this.heapify();
@@ -38,6 +41,9 @@ public class MinHeap implements Heap {
      * @return
      */
     public int delete(){
+        if (this.size <= 0){
+            return -1;
+        }
         size -= 1;
         this.swap(0, size);
         this.deleteHelper();
@@ -48,11 +54,11 @@ public class MinHeap implements Heap {
         int i = this.size - 1;
         while (i > 0) {
             int parentidx = (i - 1) / 2;
-    
+            
             if (this.data[i] < this.data[parentidx]) {
                 this.swap(parentidx, i);
             }
-            i -= 1;
+            i = parentidx;
         }
     }
     
@@ -121,19 +127,19 @@ public class MinHeap implements Heap {
      * 
      * @param array
      */
-    static int[] heapSort(int[] array){
+    static int[] heapSort(int[] array) {
         MinHeap minHeap = new MinHeap(array.length);
 
         for (int i = 0; i < array.length; i++) {
             minHeap.insert(array[i]);
         }
-    
+
         int[] sortedArray = new int[array.length];
-    
+
         for (int i = 0; i < sortedArray.length; i++) {
             sortedArray[i] = minHeap.delete();
         }
-    
+
         return sortedArray;
     }
 

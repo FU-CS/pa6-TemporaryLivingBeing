@@ -85,6 +85,14 @@ public class MaxHeapTest {
         heap.delete();
         assertTrue(heap.isEmpty());
     }
+    @Test
+    void testEmptyInsertDelete() {
+        MaxHeap heap = new MaxHeap(0);
+        heap.insert(5);
+        assertTrue(heap.isEmpty());
+        assertEquals(-1, heap.delete());
+        assertTrue(heap.isEmpty());
+    }
 
     @Test
     void testPrint() {
@@ -117,7 +125,7 @@ public class MaxHeapTest {
         @Test
         public void testHeapSortRandom() {
             int[] input = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
-            int[] expected = {1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9};
+            int[] expected = {9, 6, 5, 5, 5, 4, 3, 3, 2, 1, 1};
             int[] sorted = MaxHeap.heapSort(input);
             assertArrayEquals(expected, sorted);
         }
@@ -125,7 +133,7 @@ public class MaxHeapTest {
         @Test
         public void testHeapSortDuplicateElements() {
             int[] input = {2, 2, 3, 1, 3, 1, 2};
-            int[] expected = {1, 1, 2, 2, 2, 3, 3};
+            int[] expected = {3, 3, 2, 2, 2, 1, 1};
             int[] sorted = MaxHeap.heapSort(input);
             assertArrayEquals(expected, sorted);
         }

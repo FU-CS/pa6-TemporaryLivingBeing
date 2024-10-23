@@ -20,8 +20,10 @@ public class MaxHeap implements Heap {
      * For a min heap, the value is inserted at the end of the heap and then bubbled up
      * @param value
      */ 
-    // 1 2 / 1
     public void insert(int value){
+        if (this.size >= this.maxCapacity){
+            return;
+        }
         this.data[this.size] = value;
         this.size += 1;
         this.heapify();
@@ -40,6 +42,10 @@ public class MaxHeap implements Heap {
      * @return
      */
     public int delete(){
+        if (this.size <= 0){
+            return -1;
+        }
+        
         size -= 1;
         this.swap(0, size);
         this.deleteHelper();
@@ -126,14 +132,14 @@ public class MaxHeap implements Heap {
      */
     static int[] heapSort(int[] array){
         MaxHeap maxHeap = new MaxHeap(array.length);
-
+    
         for (int i = 0; i < array.length; i++) {
             maxHeap.insert(array[i]);
         }
     
         int[] sortedArray = new int[array.length];
     
-        for (int i = sortedArray.length - 1; i >= 0; i--) {
+        for (int i = 0; i < sortedArray.length; i++) {
             sortedArray[i] = maxHeap.delete();
         }
     
